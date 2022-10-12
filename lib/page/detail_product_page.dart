@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../product_model.dart';
+import '../model/product_model.dart';
 
 class DetailProductPage extends StatelessWidget {
   final Product product;
@@ -34,8 +35,9 @@ class DetailProductPage extends StatelessWidget {
           const Divider(),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("Avis",
-              style: Theme.of(context).textTheme.headline6),
+            child: TextButton(
+                onPressed: () => context.go('/detail/review',extra: product),
+              child: Text("Avis",style: Theme.of(context).textTheme.headline6)),
           ),
           Text(product.description),
           const Divider(),

@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sales/model/cart_model.dart';
 import 'package:flutter_sales/page/product_check_page.dart';
-import 'package:flutter_sales/product_model.dart';
+import 'package:flutter_sales/model/product_model.dart';
+import 'package:flutter_sales/page/review_page.dart';
+import 'model/review_model.dart';
 import 'page/cart_page.dart';
 import 'page/list_product_page.dart';
 import 'page/detail_product_page.dart';
+import 'package:provider/provider.dart';
 
 import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+      ChangeNotifierProvider<CartModel>(
+      create : (_)=>CartModel([]) ,
+      child: MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,12 +27,18 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
         path: '/',
-        //builder: (_, state) => ListProductPage(),
-        builder: (_, state) => ProductCheckPage(),
+        builder: (_, state) => ListProductPage(),
+        //builder: (_, state) => ProductCheckPage(),
         routes: [
           GoRoute(
             path: 'detail',
             builder: (_, state) =>  DetailProductPage(state.extra as Product),
+            routes:[
+              GoRoute(
+                path: 'review',
+                builder: (_, state) => ReviewPage(state.extra as Product),
+              )
+            ]
           ),
           GoRoute(
             path: 'cart',

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../product_model.dart';
+import '../model/product_model.dart';
 
 class ProductCheckPage extends StatelessWidget {
   const ProductCheckPage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class ProductCheckPage extends StatelessWidget {
           builder:(_,snapshot){
             if(snapshot.hasData && snapshot.data !=null){
               String body = snapshot.data!.body;
-              final List<dynamic> lsProductsJSON= jsonDecode(body);
+              final List<dynamic> lsProductsJSON= jsonDecode(body) as List;
               List<Product> lsProducts = List.empty(growable: true);
               lsProductsJSON.forEach((mapProduct) =>
                 lsProducts.add(Product.fromJson(mapProduct))
